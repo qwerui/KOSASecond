@@ -1,0 +1,19 @@
+<!--프론트 개발담당 :김범철-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/join-style.css}">
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <title>Verification Success</title>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="verify-container">
+    <h1>Verification Successful</h1>
+    <p>Your email has been successfully verified.</p>
+    <div class="resend">
+        <a th:href="@{/login}"><input type="submit" value="홈"></a>
+    </div>
+</div>
+</body>
+</html>

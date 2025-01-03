@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - Sketchbook</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="gptlayout :: header"></header>
+
+<main>
+    <div class="content" th:fragment="content">
+        <h1>로그인 페이지</h1>
+        <form th:action="@{/login}" method="post">
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    사용자ID 또는 비밀번호를 확인해 주세요.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">사용자ID</label>
+                <input type="text" name="username" id="username" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </form>
+        <a th:href="@{/join}">회원가입</a>
+        <a th:href="@{/find-account}">아이디 찾기</a>
+        <hr>
+        <a href="/oauth2/authorization/naver">Naver 로그인</a><br>
+        <a href="/oauth2/authorization/google">Google 로그인</a>
+    </div>
+</main>
+
+<footer th:insert="gptlayout :: footer"></footer>
+
+
+</body>
+</html>

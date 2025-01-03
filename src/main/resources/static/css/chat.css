@@ -1,0 +1,29 @@
+#content-frame {
+    height:400px;
+    overflow-anchor:auto;
+}
+
+.chat-circle {
+    display:inline-block;
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    background-color:red;
+}
+
+#chat-container {
+    background-color:#C5D9E2;
+    padding: 5px;
+    position: fixed;
+    width: 300px;
+    height: 530px;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    display: none;
+}
+
+.chat-logo {
+    width:50px;
+    height:50px;
+}

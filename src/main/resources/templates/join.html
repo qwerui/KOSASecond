@@ -1,0 +1,115 @@
+<!--프론트 개발담당 :김범철-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/join-style.css}">
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 이메일 입력 필드에서 벗어날 때 실행되는 함수
+            $('#email').on('blur', function() {
+                var email = $(this).val();
+                var isEmailValid = true;
+
+                $.ajax({
+                    url: '/check-email',
+                    type: 'GET',
+                    data: { email: email },
+                    success: function(data) {
+                        if (data) {
+                            $('#emailError').text('Email is already taken');
+
+                        } else {
+                            $('#emailError').text('');
+
+                        }
+                    }
+
+                });
+            });
+
+            // 폼이 제출되기 전, 이메일 중복 확인을 다시 체크합니다.
+            $('form').on('submit', function(event) {
+                var email = $('#email').val();
+                var isEmailValid = true;
+
+                $.ajax({
+                    url: '/check-email',
+                    type: 'GET',
+                    data: { email: email },
+                    async: false, // 비동기 요청을 동기로 설정 (중요)
+                    success: function(data) {
+                        if (data) {
+                            $('#emailError').text('Email is already taken');
+
+                            isEmailValid = false;
+                        } else {
+                            $('#emailError').text('');
+
+                        }
+                    }
+                });
+
+                // 이메일이 유효하지 않으면 폼 제출을 막습니다.
+                if (!isEmailValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+
+<div class="join-container">
+    <div class="my-3 border-bottom">
+        <div>
+            <h4>회원가입</h4>
+        </div>
+    </div>
+    <form th:action="@{/join}" th:object="${createUserForm}" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">이름</label>
+            <input type="text" th:field="*{username}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">비밀번호</label>
+            <input type="password" th:field="*{password1}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">비밀번호 확인</label>
+            <input type="password" th:field="*{password2}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">이메일</label>
+            <input type="email" th:field="*{email}" class="form-control">
+            <span id="emailError" style="color: red;"></span>
+        </div>
+
+        <div class="mb-3">
+            <div class="gender-selection">
+                <label for="gender">성별</label>
+                <div class="gender-option">
+                    <input type="radio" id="male" th:field="*{gender}" value="남">
+                    <label for="male">남</label>
+                </div>
+                <div class="gender-option">
+                    <input type="radio" id="female" th:field="*{gender}" value="여">
+                    <label for="female">여</label>
+                </div>
+            </div>
+        </div>
+        <div class="submit-container">
+            <input type="submit" id="submitBtn" class="btn btn-primary" value="회원가입"></input>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+

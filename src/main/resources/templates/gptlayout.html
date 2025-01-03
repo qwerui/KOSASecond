@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketchbook</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <div th:class="header-container">
+        <h1>Sketchbook</h1>
+        <nav>
+            <a th:href="@{/login}">로그인</a>
+            <a th:href="@{/join}">회원가입</a>
+            <a th:href="@{/main}">메인</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="content" th:fragment="content">
+        <!-- Page-specific content will be inserted here -->
+    </div>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <p>&copy; 2024 Sketchbook. All rights reserved.</p>
+    </div>
+</footer>
+
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+</html>

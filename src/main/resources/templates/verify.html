@@ -1,0 +1,34 @@
+<!--개발담당 :김범철-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/join-style.css}">
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <title>Verify Email</title>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="verify-container">
+    <h1>Verify Email</h1>
+    <form th:action="@{/verify}" method="post">
+        <div>
+            <label for="code">Verification Code:</label>
+            <input type="text" id="code" name="code" required/>
+        </div>
+        <div class="submit-container">
+            <input type="submit" value="인 증">
+        </div>
+    </form>
+    <form th:action="@{/resend-activation-email}" method="post">
+        <div class="resend">
+            <input type="hidden" th:name="email" th:id="email" th:value="${param.email}">
+            <input type="submit" value="인증코드 재발송">
+        </div>
+    </form>
+
+    <!-- Optional Message Section -->
+    <div class="message" th:if="${message}" th:text="${message}"></div>
+    <div class="message" th:if="${error}" th:text="${error}"></div>
+</div>
+</body>
+</html>

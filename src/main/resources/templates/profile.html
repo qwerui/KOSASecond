@@ -1,0 +1,35 @@
+<!--프론트 개발담당 :김범철-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 프로필</title>
+    <link href="css/profile.css" rel="stylesheet" type="text/css"/>
+    <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<!-- 상단 이미지 배너 -->
+<div class="user-banner">
+    <div class="image-banner">
+        <img th:src="${profileOwner.cover_img_url != null && !profileOwner.cover_img_url.isEmpty() ? profileOwner.cover_img_url : '/img/logo.png'}"
+             alt="Cover Image">
+    </div>
+</div>
+
+<!-- 프로필 섹션 -->
+<div class="profile-section">
+    <div class="profile-card">
+        <div class="profile-image">
+            <img th:src="${profileOwner.profile_img_url != null && !profileOwner.profile_img_url.isEmpty() ? profileOwner.profile_img_url : '/img/default-profile.png'}"
+                 alt="Profile Image"/>
+        </div>
+        <div class="profile-details">
+            <h2 class="profile-name" th:text="${profileOwner.username}">사용자 이름</h2>
+            <h5 class="profile-info" th:text="${profileOwner.email}">사용자 이메일</h5>
+            <h6 class="profile-info" th:text="${profileOwner.address}">사용자 주소</h6>
+        </div>
+    </div>
+</div>
+</body>
+</html>

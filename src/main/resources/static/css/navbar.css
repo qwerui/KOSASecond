@@ -1,0 +1,88 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    z-index: 1000; /* Ensures the navbar stays on top */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.nav-logo {
+    height: 70px; /* Adjust size as needed */
+}
+
+.nav-icon {
+    height: 60px; /* Adjust size as needed */
+    margin: 0 10px;
+}
+
+.nav-left, .nav-center, .nav-right {
+    display: flex;
+    align-items: center;
+}
+.nav-left{
+    width : 25%;
+}
+
+.nav-center {
+    width : 50%;
+    flex: 1;
+    justify-content: center;
+
+}
+
+
+.nav-right {
+    width : 25%;
+    justify-content: flex-end;
+}
+
+.content {
+    padding-top: 20px; /* Adjust this value based on the height of your navbar */
+}
+
+.navbar .search-nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #f9f9f9;
+    width: 200px; /* Adjust width as needed */
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+.search-icon input[type="text"] {
+    width: 70%; /* Make sure the input takes up the full width of its container */
+    border: none;
+    outline: none;
+    background: none;
+    padding: 5px 0;
+    font-size: 14px;
+    border-radius: 25px;
+}
+
+.search-icon img {
+    height: 20px; /* Adjust size as needed */
+    width: 20px;
+}

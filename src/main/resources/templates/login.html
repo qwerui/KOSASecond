@@ -1,0 +1,61 @@
+<!--프론트 개발담당 :김범철-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="container">
+    <div class="left-section">
+        <img th:src="@{/img/loginlogo.png}" alt="Logo" class="logo">
+        <h2 class="tagline">환영합니다! 당신의 이야기를 그려주세요.</h2>
+    </div>
+    <div class="right-section">
+        <div class="login-container">
+            <h2>로그인</h2>
+            <form th:action="@{/login}" method="post">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        사용자ID 또는 비밀번호를 확인해 주세요.
+                    </div>
+                </div>
+                <div th:if="${param.oAuthError}">
+                    <div class="alert alert-danger">
+                        이미 가입된 계정입니다. 일반 로그인을 해주세요.
+                    </div>
+                </div>
+                <div>
+                    <label for="username">Email address</label>
+                    <input type="email" id="username" name="username" placeholder="name@example.com">
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Password">
+                </div>
+                <input type="submit" value="로그인">
+
+            </form>
+
+            <div class="find-pass">
+                <a id="find-pass" th:href="@{/find-account}">비밀번호를 잊으셨나요?</a>
+            </div>
+            <div class="social-login">
+                <a class="social-btn naver-btn" href="/oauth2/authorization/naver">네이버 로그인</a>
+                <a class="social-btn google-btn" href="/oauth2/authorization/google">구글 로그인</a>
+            </div>
+            <div class="signup-link">
+                <a id="signup-link" th:href="@{/join}">회원가입</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

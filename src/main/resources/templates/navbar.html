@@ -1,0 +1,29 @@
+<!--프론트 개발담당 :김범철-->
+<nav class="navbar" th:fragment="navbarFragment">
+    <div class="nav-left">
+        <a href="/main"><img src="/img/navlogo.png" alt="Logo" class="nav-logo"></a>
+        <div class="search-nav">
+            <form id="searchForm" action="/friend/usersearch" method="GET">
+                <div class="search-icon">
+                    <img src="/img/search-icon.png" alt="Search Icon">
+                    <input type="text" name="keyword" placeholder="검색" id="searchInput">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="nav-center">
+
+        <a th:href="@{/friend/list}"><img src="/img/friends.png" alt="Friends" class="nav-icon"></a>
+        <a th:href="@{/profile}"><img src="/img/mypage.png" alt="My Page" class="nav-icon"></a>
+    </div>
+    <div class="nav-right">
+        <a sec:authorize="isAnonymous()" th:href="@{/login}">
+            <img src="/img/login.png" alt="Logout" class="nav-icon">
+        </a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}" onclick="alert('로그아웃 되었습니다. 다음에 또 만나요!')">
+            <img src="/img/logout.png" alt="Logout" class="nav-icon">
+        </a>
+
+    </div>
+</nav>
+

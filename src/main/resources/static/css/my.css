@@ -1,0 +1,36 @@
+.main-container {
+    display: flex;
+    padding: 20px;
+    margin-top: 80px;
+    background-color: #f4f4f4;
+}
+
+.sidebar, .friends {
+    width: 20%;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.sidebar {
+    position: fixed;
+    top: 80px; /* 네비게이션 바 높이 */
+    left: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+
+}
+
+.content {
+    margin: 0 20%;
+    padding: 20px;
+    flex: 1;
+    background-color: #f4f4f4;
+}
+
+.friends {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}

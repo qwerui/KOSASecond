@@ -1,0 +1,19 @@
+<!--프론트 개발담당 :김범철-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/join-style.css}">
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <title>Verification Failed</title>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="verify-container">
+    <h1>Verification Failed</h1>
+    <p>Invalid verification code. Please try again.</p>
+    <div class="resend">
+        <input type="submit" onclick="history.back()" value="뒤로가기">
+    </div>
+</div>
+</body>
+</html>

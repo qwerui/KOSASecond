@@ -1,0 +1,30 @@
+<!--프론트 개발담당 :김범철-->
+<div class="friend-card" th:each="user : ${userList}">
+    <div class="user-image">
+        <!--        <img th:src="@{/images/{filename}(filename=${#strings.substring(imgsrc)>  -->
+        <img th:src="${user.profile_img_url != null && !user.profile_img_url.isEmpty() ? user.profile_img_url : '/img/default-profile.png'}">
+    </div>
+    <span class="user-name" th:text="${user.username}"></span>
+    <div class="btn-group">
+        <div class="add-friend">
+            <form th:action="@{/friend/delete}" method="post">
+                <input type="hidden" name="friendId" th:value="${user.id}">
+                <input type="submit" name="delete" value="삭제">
+            </form>
+        </div>
+        <div class="block-friend">
+            <form th:action="@{/friend/block}" method="post">
+                <input type="hidden" name="blockId" th:value="${user.id}">
+                <input type="submit" name="block" value="차단">
+            </form>
+        </div>
+    </div>
+</div>
+<div th:attr="hx-get='/friend/list/' + ${nextPageNumber}, hx-swap='afterend', hx-trigger='revealed'"
+     th:if="${nextPageNumber} != null"></div>
+
+<!--<div th:attr="hx-get='/getmypost/'+ ${nextPageNumber}, hx-swap='afterend', hx-trigger='revealed'"-->
+<!--     th:if="${nextPageNumber} != null"></div>-->
+
+<!--<div hx-get="/friend/user_search/{query}/" hx-swap="outerHTML" hx-trigger="revealed"-->
+<!--     th:attr="hx-get=${'/friend/user_search/' + query + ${nextPageNumber}"></div>-->

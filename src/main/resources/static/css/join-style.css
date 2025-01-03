@@ -1,0 +1,248 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.join-container {
+    background: #fff;
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.join-container h4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.join-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.join-container input[type="text"],
+.join-container input[type="email"],
+.join-container input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.join-container input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    background: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.join-container input[type="submit"]:hover {
+    background: #4cae4c;
+}
+
+ .submit-container {
+            display: flex;
+            justify-content: center;
+        }
+
+.gender-selection {
+    display: flex;
+    margin: 10px 0;
+}
+.gender-selection label {
+    margin: 0 10px;
+    font-size: 16px;
+}
+.gender-selection input[type="radio"] {
+    margin: 0 10px;
+    display: none;
+}
+.gender-selection input[type="radio"] + label:before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #aaa;
+    vertical-align: middle;
+}
+.gender-selection input[type="radio"]:checked + label:before {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+.changepw-container{
+    background: #fff;
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+.changepw-container .account{
+    text-align: center; /* 가운데 정렬을 위한 속성 */
+    margin-top: 10px;
+}
+.account input[type="submit"]{
+    width: 50%;
+    padding: 10px;
+    background: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.changepw-container .resend {
+    text-align: center; /* 가운데 정렬을 위한 속성 */
+    margin-top: 10px;
+}
+
+.changepw-container .message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* 스타일링 메시지 */
+.message[th\\:if="${message}"] {
+    background-color: #e0f7fa;
+    color: #00796b;
+    border: 1px solid #00796b;
+}
+
+/* 스타일링 오류 */
+.message[th\\:if="${error}"] {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #c62828;
+}
+
+.changepw-container h4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.changepw-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.changepw-container input[type="email"],
+.changepw-container input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.changepw-container input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    background: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.changepw-container input[type="submit"]:hover {
+    background: #4cae4c;
+}
+
+.verify-container{
+    background: #fff;
+    width: 600px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.verify-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.verify-container input[type="text"]{
+    width: 95%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+}
+
+.verify-container input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    background: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.verify-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.verify-container h4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.verify-container p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.verify-container .auth-link {
+    text-align: center; /* 가운데 정렬을 위한 속성 */
+    margin-top: 10px;
+}
+
+.auth-link .btn-link {
+   display: inline-block;
+   padding: 10px 20px;
+   margin-top: 10px;
+   background-color: #007BFF;
+   color: #fff;
+   text-align: center;
+   text-decoration: none;
+   border-radius: 5px;
+   transition: background-color 0.3s ease;
+}
+
+.auth-link .btn-link:hover {
+   background-color: #0056b3;
+}
+
+.verify-container .resend {
+    text-align: center; /* 가운데 정렬을 위한 속성 */
+    margin-top: 10px;
+}
+
+.resend input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    background: #f6c005;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

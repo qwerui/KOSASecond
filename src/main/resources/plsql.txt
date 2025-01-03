@@ -1,0 +1,15 @@
+-- 작업자 : 이하린
+
+-- 이미지 저장 프로시저
+
+CREATE OR REPLACE PROCEDURE insert_image_metadata (
+    p_post_no IN NUMBER,
+    p_file_path IN VARCHAR2
+) IS
+BEGIN
+    INSERT INTO image (post_no, file_path, is_deleted) VALUES (p_post_no, p_file_path, 0);
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE;
+END;
+/

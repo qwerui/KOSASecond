@@ -1,0 +1,26 @@
+<!--프론트 개발담당 :김범철-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/join-style.css}">
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <title>Title</title>
+</head>
+<body>
+
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+<div class="changepw-container">
+<form th:action="@{/find-account}" method="post">
+
+    <label for="email" class="form-label">이메일</label>
+    <input type="email" name="email" id="email" class="form-control">
+    <span id="emailError" style="color: red;"></span>
+    <div class="account">
+        <input type="submit" id="submitBtn" value="찾기">
+    </div>
+</form>
+</div>
+</body>
+</html>

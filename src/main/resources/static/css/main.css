@@ -1,0 +1,396 @@
+.main-container {
+    width:100%;
+    display: flex;
+    margin-top: 90px;
+    background-color: #f4f4f4;
+}
+
+.main-sidebar, .friends {
+    width: 20%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-sidebar {
+    position: fixed;
+    height: 100vh;
+    background-color: #fff;
+    box-sizing: border-box; /* 패딩 포함하여 사이즈 계산 */
+    overflow-y: auto;
+
+}
+.main-sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.main-sidebar ul {
+    list-style: none; /* li의 marker를 숨깁니다 */
+    padding: 0;
+}
+
+.main-sidebar li {
+    margin-bottom: 10px;
+}
+
+.main-sidebar input[type="text"] {
+     border: none;
+     background: none;
+     color: inherit; /* 부모 요소의 글자 색상 사용 */
+        font: inherit; /* 부모 요소의 글꼴 스타일 사용 */
+        pointer-events: none; /* 입력 불가능하게 설정 */
+        width: auto; /* 값에 따라 너비 자동 조절 */
+        padding: 0;
+        margin: 0;
+}
+.main-sidebar a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.main-sidebar a:hover {
+    background-color: #f0f0f0;
+}
+
+.main-sidebar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.main-sidebar .arrow-icon {
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+}
+
+.main-sidebar a:hover .arrow-icon {
+    opacity: 1;
+}
+
+.content {
+    max-width:60%;
+    margin-left:20%;
+    height : 100vh;
+    padding: 20px;
+    flex: 1;
+    background-color: #faf4c0
+}
+
+.friends {
+    position: fixed;;
+    height: 100vh;
+    background-color: #fff;
+    box-sizing: border-box; /* 패딩 포함하여 사이즈 계산 */
+    overflow-y: auto;
+    margin-left : 80%;
+}
+
+.friends .friends-chat img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.friends .friends-chat .arrow-icon {
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    object-fit: cover;
+}
+
+.friends-chat input[type="text"] {
+     border: none;
+     background: none;
+     color: inherit; /* 부모 요소의 글자 색상 사용 */
+     font: inherit; /* 부모 요소의 글꼴 스타일 사용 */
+     pointer-events: none; /* 입력 불가능하게 설정 */
+     width: auto; /* 값에 따라 너비 자동 조절 */
+     padding: 0;
+     margin: 0;
+}
+
+.carousel {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.carousel-inner {
+    width: 70% !important;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    position: relative !important;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-header .profile-box {
+    display: flex;
+}
+
+.post-header .profile-box .profile-picture {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.post-header .profile-box .profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-body .post-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.post-body .post-stats .like-count {
+
+}
+
+.post-body .post-stats .reply-count {
+
+}
+
+.post-footer {
+    display: flex;
+    border-top: 1px solid gray;
+}
+
+.post-footer .post-button-group {
+    display: flex;
+    margin: 0 auto;
+}
+
+.post-footer .post-button-group > div {
+    padding: 10px 20px;
+    margin: 6px;
+}
+
+.think {
+    display: flex;
+}
+
+.think .profile-picture {
+     width: 48px;
+     height: 48px;
+     overflow: hidden;
+     border: 3px solid white;
+     margin-right: 8px;
+}
+
+.profile-picture img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.5rem;
+}
+
+.profile-box .profile-picture {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border: 3px solid white;
+    margin-right: 8px;
+}
+
+.profile .image {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border: 3px solid white;
+    margin-right: 8px;
+}
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reply-header .avatar {
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border: 3px solid white;
+    margin-right: 8px;
+}
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.new-think {
+    border-radius: 1.5rem;
+    background-color: #EAEAEA;
+    color: black;
+    padding: 12px 10px;
+    text-align: start;
+    width: 90%;
+}
+
+/*.modal-content {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center; !* Center align items *!*/
+/*}*/
+
+.content-body {
+    display: flex;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start of the container */
+    gap: 10px; /* Optional: Adds some space between the elements */
+}
+
+.button-container-wrapper {
+    width: 25%; /* Take up 25% of the width */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space between buttons */
+}
+
+#canvas {
+    width: 75%; /* Take up 75% of the width */
+    border: 2px dashed black;
+}
+
+.modForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-group {
+    align-self: end;
+    margin: 5px;
+}
+
+.modal-header {
+    display: flex;
+    width: 100%;
+}
+
+.modal-header .create-post {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-submit {
+    align-self: end;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+#attachedImagesContainer {
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+.btn2 {
+    align-self: end;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+}
+
+.btn2:hover {
+    background-color: white !important;
+}
+
+.modal-header .create-post {
+    text-align: center;
+}
+
+.modal-body .writer-box {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.writer-box .profile {
+    display: flex;
+    align-items: center;
+}
+
+.writer-box .profile .image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.reply-box {
+    display: flex;
+}
+
+.reply-box .reply-header {
+    height: 100%;
+}
+
+.reply-header .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.reply-box .reply-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.reply-body .reply-content {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    border-radius: 16px;
+    padding: 6px 12px;
+    color: black;
+}
+
+.reply-content .author {
+    font-weight: bolder;
+}
+
+.reply-body .actions {
+    display: flex;
+    gap: 5px;
+}
+
+.reply-box .reply-footer {
+    display: flex;
+    gap: 10px;
+}
+
+.reply-footer .like {
+    font-weight: bolder;
+    display: flex;
+    gap: 3px;
+}

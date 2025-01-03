@@ -1,0 +1,200 @@
+/* 기본 스타일 및 전체 레이아웃 설정 */
+body {
+    margin: 0;
+    background-color: #faf4c0
+    font-family: Arial, sans-serif;
+}
+
+/* 상단 이미지 배너 스타일 */
+.user-banner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background-color: #f4f4f4;
+    margin-top : 100px;
+}
+.cover-modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 어둡게 */
+}
+
+/* 모달 콘텐츠 */
+.modal-profile {
+    background-color: #fff;
+    margin: 10% auto; /* 중앙 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    align-items : center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* 닫기 버튼 */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    align-self: end;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.file-select{
+    display : flex;
+    width :100%;
+    gap:5px;
+    justify-content: center;
+}
+
+.file-select input[type="submit"]{
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background : #2778ff;
+}
+
+.image-banner {
+    width:100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+
+}
+
+.image-banner img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.cover-modal{
+    width:500px;
+    margin:0 auto;
+}
+/* 컨테이너 너비 설정 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto; /* 화면 중앙 정렬 */
+    padding: 20px; /* 여백 추가 */
+}
+
+/* 메인 컨텐츠 영역 설정 */
+.main-container {
+    display: flex;
+    gap: 20px; /* 사이드바와 컨텐츠 사이 간격 */
+}
+
+
+
+/* 중앙 컨텐츠 스타일 */
+.content {
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    box-sizing: border-box; /* 패딩 포함하여 사이즈 계산 */
+}
+
+/* 카드 및 버튼 스타일 */
+.card {
+    padding : 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.btn-change{
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* 게시글 출력 영역 스타일 */
+
+/* 프로필 섹션 스타일 */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    background-color: #fff;
+    padding: 20px 0;
+    max-width: 1200px;
+    margin : 0 auto
+}
+
+.profile-card {
+    display: flex;
+    align-items: left;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+    margin-bottom: 10px;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-menu {
+    margin-top: 10px;
+}
+
+.profile-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.profile-menu ul li {
+    display: inline;
+}
+
+.profile-menu ul li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+#setting-btn {
+    width:50px;
+    height:50px;
+}

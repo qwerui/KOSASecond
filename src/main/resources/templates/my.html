@@ -1,0 +1,304 @@
+<!-- 게시글, 댓글 관련 작업자 : 이하린 / CSS 작업자 : 김범철 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+            src="https://unpkg.com/htmx.org@2.0.1"></script>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="/css/post.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/my.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<main class="main-container">
+    <aside class="sidebar">
+        <h2>카테고리</h2>
+        <!-- 카테고리 목록 추가 -->
+    </aside>
+    <section class="content">
+        <div class="card">
+            <div class="card-body">
+                <div class="btn">무슨 생각 하세요?</div>
+            </div>
+        </div>
+
+        <!-- 게시글 출력 영역 -->
+        <div id="postContainer" class="py-3">
+            <div hx-get="/getmypost/0" hx-swap="outerHTML" hx-trigger="revealed"></div>
+        </div>
+    </section>
+    <aside class="friends">
+        <h2>친구 리스트</h2>
+        <!-- 친구 리스트 추가 -->
+    </aside>
+</main>
+
+<!-- 첫 번째 Modal -->
+<div class="modal" id="modal1">
+    <!-- 첫 번째 모달 내용 -->
+    <div class="modal-content">
+        <span class="close" id="close1">&times;</span>
+        <form action="/post/create" method="post">
+            <textarea class="form-control" name="content"></textarea>
+            <div id="attachedImagesContainer"></div>
+            <input id="imageData" name="imageData" type="hidden">
+            <input class="btn btn-primary my-2" type="submit" value="저장!">
+        </form>
+        <button class="btn2">🖌</button>
+    </div>
+</div>
+
+<!-- 그림판 Modal -->
+<div class="modal" id="modal2">
+    <!-- 그림판 모달 내용 -->
+    <div class="modal-content">
+
+        <span class="close" id="close2">&times;</span>
+
+        <!-- 색상 선택기 -->
+        <input type="color" id="color-picker" value="#000000">
+
+        <!-- 브러시 크기 조절 -->
+        <label for="brush-size">브러시 크기:</label>
+        <input type="range" id="brush-size" min="1" max="50" value="5">
+
+        <!-- 지우개 크기 조절 -->
+        <label for="eraser-size">지우개 크기:</label>
+        <input type="range" id="eraser-size" min="5" max="100" value="50">
+
+        <button id="erase">지우개</button>
+        <input id="filereader" type="file" accept="image/*" style="display:none;" />
+        <button id="add-image">이미지 추가</button>
+        <button id="select-element">선택</button>
+        <button id="delete-canvas-element">선택 요소 삭제</button>
+        <br>
+
+        <!-- 그림판 영역 -->
+        <canvas id="canvas" width="800" height="600" style="border: 2px dashed black;"></canvas>
+
+        <button id="attach">그림 첨부</button>
+    </div>
+</div>
+
+<!--게시물 수정 Modal -->
+<div class="modal modal-container" id="postModalContainer">
+    <!-- 게시물 수정 모달 내용 -->
+    <div class="modal-content" id="postModalBody">
+        <span class="close" id="postModalClose">&times;</span>
+        <form id="modForm" method="post">
+            <textarea class="form-control" name="content"></textarea>
+            <div class="post-image-list" id="postAttachedImagesContainer"></div>
+            <input id="postImageData" name="postImageData" type="hidden">
+            <button id="postModBtn" type="submit">수정 완료</button>
+        </form>
+        <button id="postAddBtn">그림 추가</button>
+        <button id="postDelBtn">삭제</button>
+    </div>
+</div>
+
+
+
+<script src="/js/post.js"></script>
+<script>
+
+    function deletePost(postNo) {
+        if(!confirm("정말 삭제하실래요?")){
+            return;
+        }
+
+        const post = document.getElementById(`post-container-${postNo}`);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/post/delete/${postNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    post.remove();
+                } else {
+                    alert("게시글 삭제 실패!");
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function modifyReply(replyNo) {
+        const replyContainer = document.getElementById(`reply-container-${replyNo}`);
+        const replyContent = document.getElementById(`reply-content-${replyNo}`);
+        const currentContent = replyContent.innerText;
+
+        // 숨길 버튼 선택
+        const modifyButton = replyContainer.querySelector('.reply-modify-btn');
+        const deleteButton = replyContainer.querySelector('.reply-delete-btn');
+
+        // 버튼 숨기기
+        modifyButton.style.display = 'none';
+        deleteButton.style.display = 'none';
+
+        // 수정 textarea, 저장 버튼 추가
+        replyContent.innerHTML = `<textarea class="form-control" id="modify-reply-content-${replyNo}">${currentContent}</textarea><br><button class="badge bg-success" onclick="(${replyNo})">✔</button>`;
+    }
+
+    function saveReply(replyNo) {
+        const modifiedContent = document.getElementById(`modify-reply-content-${replyNo}`).value;
+        const replyContainer = document.getElementById(`reply-container-${replyNo}`);
+
+        // 원래 버튼 선택
+        const modifyButton = replyContainer.querySelector('.reply-modify-btn');
+        const deleteButton = replyContainer.querySelector('.reply-delete-btn');
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/reply/modify/${replyNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    const replyContent = document.getElementById(`reply-content-${replyNo}`);
+                    replyContent.innerText = modifiedContent;
+
+                    // 버튼 다시 보이기
+                    modifyButton.style.display = 'inline';
+                    deleteButton.style.display = 'inline';
+                } else {
+                    alert("댓글 수정 실패!");
+                }
+            }
+        };
+        xhr.send(JSON.stringify({content: modifiedContent}));
+    }
+
+    function deleteReply(replyNo) {
+        const reply = document.getElementById(`reply-container-${replyNo}`);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/reply/delete/${replyNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    reply.remove();
+                } else {
+                    alert("댓글 삭제 실패!");
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function likePost(postNo) {
+        const postHeart = document.getElementById(`post-heart${postNo}`);
+        let likedCount = document.getElementById(`liked-count${postNo}`);
+        let currentCountText = likedCount.textContent;
+        // 숫자 부분만 추출
+        let currentCount = parseInt(currentCountText.replace(/[^\d]/g, ''), 10);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/post/like/${postNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    postHeart.innerText = "좋아요 ❤";
+                    postHeart.setAttribute('onclick', `cancelLikePost(${postNo})`);
+                    likedCount.innerText = (currentCount + 1) + '명이 좋아합니다';
+                } else {
+                    alert("좋아요 누르기에 실패했어요.");
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function cancelLikePost(postNo) {
+        const postHeart = document.getElementById(`post-heart${postNo}`);
+        let likedCount = document.getElementById(`liked-count${postNo}`);
+        let currentCountText = likedCount.textContent;
+        let currentCount = parseInt(currentCountText.replace(/[^\d]/g, ''), 10);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/post/cancel-like/${postNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    postHeart.innerText = "좋아요 🤍";
+                    postHeart.setAttribute('onclick', `likePost(${postNo})`);
+                    likedCount.innerText = (currentCount - 1) + '명이 좋아합니다';
+                } else {
+                    alert("좋아요 취소에 실패했어요.");
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function likeReply(replyNo) {
+        const replyHeart = document.getElementById(`reply-heart${replyNo}`);
+        let likedCount = document.getElementById(`reply-liked-count${replyNo}`);
+        let currentCountText = likedCount.textContent;
+        // 숫자 부분만 추출
+        let currentCount = parseInt(currentCountText.replace(/[^\d]/g, ''), 10);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/reply/like/${replyNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    replyHeart.innerText = "❤";
+                    replyHeart.setAttribute('onclick', `cancelLikeReply(${replyNo})`);
+                    likedCount.innerText = (currentCount + 1) + ' Liked!';
+                } else {
+                    alert("좋아요 누르기에 실패했어요.");
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function cancelLikeReply(replyNo) {
+        const replyHeart = document.getElementById(`reply-heart${replyNo}`);
+        let likedCount = document.getElementById(`reply-liked-count${replyNo}`);
+        let currentCountText = likedCount.textContent;
+        let currentCount = parseInt(currentCountText.replace(/[^\d]/g, ''), 10);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/reply/cancel-like/${replyNo}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    replyHeart.innerText = "🤍";
+                    replyHeart.setAttribute('onclick', `likeReply(${replyNo})`);
+                    likedCount.innerText = (currentCount - 1) + ' Liked!';
+                } else {
+                    alert("좋아요 취소에 실패했어요.");
+                }
+            }
+        };
+        xhr.send();
+    }
+
+</script>
+</body>
+</html>

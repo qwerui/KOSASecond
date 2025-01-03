@@ -1,0 +1,185 @@
+<!-- 작업자 : 이하린 -->
+
+<div class="card mb-4" th:each="post : ${postList}" th:id="'post-container-' + ${post.no}">
+    <div class="card-body">
+
+        <div class="post-header">
+            <div class="profile-box">
+                <div class="profile-picture">
+                    <img th:src="${user.profile_img_url != null && !user.profile_img_url.isEmpty() ? user.profile_img_url : '/img/default-profile.png'}"
+                         alt="Profile Image"/>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">
+                        <span class="fw-bold" th:text="${post.sketchUser.username}"></span>
+                    </div>
+                    <div class="profile-date">
+                        <p th:text="${#strings.substring(post.created_date, 0, 10)}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="btn-group" th:if="${post.sketchUser.id == user.id}">
+                    <button aria-expanded="false" class="btn btn-sm btn-light dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            id="dropdownMenuButton" type="button">
+                        <span>•••</span>
+                    </button>
+
+                    <ul aria-labelledby="dropdownMenuButton" class="dropdown-menu ">
+                        <li>
+                            <button class="modifybtn dropdown-item text-warning"
+                                    sec:authorize="isAuthenticated()"
+                                    th:data-post-id="${post.no}"
+                                    th:if="${post.sketchUser.id == user.id}">수정
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item text-danger"
+                                    sec:authorize="isAuthenticated()"
+                                    th:if="${post.sketchUser.id == user.id}"
+                                    th:onclick="'deletePost(' + ${post.no} + ')'">삭제
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="post-body">
+            <div class="post-content mb-3">
+                <div class="row" th:if="${post.image_list != null && post.image_list.size() > 0}">
+                    <div class="col-8 mx-auto my-4">
+                        <div class="carousel slide" data-bs-theme="dark"
+                             th:id="'carousel-' + ${post.no}">
+                            <button class="carousel-control-prev" data-bs-slide="prev"
+                                    th:data-bs-target="'#carousel-' + ${post.no}"
+                                    type="button">
+                                <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <div class="carousel-inner">
+                                <div th:each="image, imageStat : ${post.image_list}">
+                                    <div class="carousel-item" th:classappend="${imageStat.index == 0} ? 'active'">
+                                        <img alt="이미지"
+                                             class="d-block w-100"
+                                             th:data-id="${image.no}"
+                                             th:src="@{/images/{filename}(filename=${#strings.substring(image.file_path, image.file_path.lastIndexOf('/') + 1)})}">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-next" data-bs-slide="next"
+                                    th:data-bs-target="'#carousel-' + ${post.no}"
+                                    type="button">
+                                <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="fw-bold fs-5" th:data-content="${post.content}" th:text="${post.content}"></div>
+            </div>
+            <div class="post-stats">
+                <div class="like-count">
+                    <span th:id="'liked-count'+${post.no}" th:text="${#lists.size(post.like)}+'명이 좋아합니다'"></span>
+                </div>
+                <div class="reply-count" th:text="'댓글 '+${post.reply_list.size()}+'개'"></div>
+            </div>
+        </div>
+
+        <div class="post-footer">
+            <div class="post-button-group">
+                <div class="like-button">
+                    <!-- postLike 리스트 순회 -->
+                    <div th:each="postLike : ${post.like}">
+                        <!-- 좋아요를 누른 ID가 현재 사용자 ID와 일치하는지를 확인 -->
+                        <div class="like-btn"
+                             th:id="'post-heart' + ${post.no}"
+                             th:if="${#lists.contains(postLike.id, user.id)}"
+                             th:onclick="'cancelLikePost(' + ${post.no} + ')'"
+                             th:text="'좋아요 ❤️'"> <!-- 일치할 경우 '❤️'로 표시 -->
+                        </div>
+                    </div>
+                    <div class="like-btn"
+                         th:id="'post-heart' + ${post.no}"
+                         th:onclick="'likePost(' + ${post.no} + ')'"
+                         th:text="'좋아요 🤍'"
+                         th:unless="${#lists.contains(post.like, user)}"> <!-- 일치하지 않을 경우 '🤍'로 표시 -->
+                    </div>
+                </div>
+                <div class="reply-button">댓글달기</div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-body-secondary flex-column" style="display: none; gap: 18px;">
+        <div class="reply-box" th:each="reply : ${post.reply_list}" th:id="'reply-container-'+${reply.no}">
+
+            <div class="reply-header">
+                <div class="avatar">
+                    <img th:src="${reply.user.profile_img_url != null && !reply.user.profile_img_url.isEmpty() ? reply.user.profile_img_url : '/img/default-profile.png'}"
+                         alt="Profile Image"/>
+                </div>
+            </div>
+
+            <div class="reply-body">
+                <div class="d-flex gap-1 align-items-center">
+                    <div class="reply-content">
+                        <div class="author" th:text="${reply.user.username}"></div> <!-- 댓글 작성자 이름 -->
+                        <div class="text" th:attr="data-reply-id=${reply.no}" th:id="'reply-content-' + ${reply.no}"
+                             th:text="${reply.content}"></div> <!-- 댓글 내용 -->
+                    </div>
+                    <div class="actions">
+                        <div class="edit">
+                            <span class="btn btn-warning badge rounded-pill reply-modify-btn"
+                                  sec:authorize="isAuthenticated()"
+                                  th:if="${reply.user.id == user.id}"
+                                  th:onclick="'modifyReply(' + ${reply.no} + ')'">🛠</span>
+                        </div> <!-- 댓글 수정 버튼 -->
+                        <div class="delete">
+                            <span class="btn btn-danger badge rounded-pill reply-delete-btn"
+                                  sec:authorize="isAuthenticated()"
+                                  th:if="${reply.user.id == user.id}"
+                                  th:onclick="'deleteReply(' + ${reply.no} + ')'">✖</span>
+                        </div> <!-- 댓글 삭제 버튼 -->
+                    </div>
+                </div>
+
+                <div class="reply-footer">
+                    <div class="date" th:text="${reply.created_date.toString().substring(0, 10)}"></div>
+                    <!-- 댓글 작성 날짜 -->
+                    <div class="like">
+                        <div th:id="'reply-liked-count'+${reply.no}"
+                             th:text="${#lists.size(reply.like)}+' like '"></div>
+                        <div th:each="replyLike : ${reply.like}">
+                            <!-- 좋아요를 누른 ID가 현재 사용자 ID와 일치하는지를 확인 -->
+                            <div class="like-btn"
+                                 th:id="'reply-heart' + ${reply.no}"
+                                 th:if="${#lists.contains(replyLike, user)}"
+                                 th:onclick="'cancelLikeReply(' + ${reply.no} + ')'"
+                                 th:text="'❤️'"> <!-- 일치할 경우 '❤️'로 표시 -->
+                            </div>
+                        </div>
+                        <div class="like-btn"
+                             th:id="'reply-heart' + ${reply.no}"
+                             th:onclick="'likeReply(' + ${reply.no} + ')'"
+                             th:text="'🤍'"
+                             th:unless="${#lists.contains(reply.like, user)}"> <!-- 일치하지 않을 경우 '🤍'로 표시 -->
+                        </div>
+                    </div> <!-- 좋아요 버튼 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3 mb-3">
+            <form method="post" th:action="@{/reply/mycreate/{no}(no=${post.no})}">
+                <textarea class="form-control mb-2" name="content"></textarea>
+                <div class="d-flex justify-content-end">
+                    <button class="badge bg-success" type="submit">✔</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:attr="hx-get='/profile/getmypost/'+ ${nextPageNumber}, hx-swap='outerHTML', hx-trigger='revealed'"
+
+     th:if="${nextPageNumber} != null"></div>
